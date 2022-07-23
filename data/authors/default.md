@@ -1,16 +1,13 @@
 ---
-name: Tails Azimuth
-avatar: /static/images/avatar.png
-occupation: Professor of Atmospheric Science
-company: Stanford University
-email: address@yoursite.com
-twitter: https://twitter.com/Twitter
-linkedin: https://www.linkedin.com
-github: https://github.com
+name: 손예지(Liv)
+avatar: /static/images/avatar.jpg
+occupation: QA Engineer
+# company: Stanford University
+email: handyejee14@gmail.com
+linkedin: https://www.linkedin.com/in/yejee-son/
+github: https://github.com/handyejee
 ---
 
-Tails Azimuth is a professor of atmospheric sciences at the Stanford AI Lab. His research interests includes complexity modelling of tailwinds, headwinds and crosswinds.
+## Introduction
 
-He leads the clean energy group which develops 3D air pollution-climate models, writes differential equation solvers, and manufactures titanium plated air ballons. In his free time he bakes raspberry pi.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+3년차 QA 엔지니어로 일하고 있습니다. 사람들의 구매 journey에 관심이 많습니다. 다양한 검증을 통해 제품의 품질을 개선하는데 기여하고 싶습니다.
