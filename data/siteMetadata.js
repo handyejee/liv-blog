@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Liv Blog',
   author: 'Yejee Son',
   headerTitle: 'LivBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'QA로 일하며 배운것과 생각들을 정리하고 있습니다',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://liv-blog.vercel.app/',
