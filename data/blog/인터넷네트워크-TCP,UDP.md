@@ -35,7 +35,6 @@ UDP는 사용자 데이터그램 프로토콜(User Datagram Protocol)이고, TCP
 UDP의 가장 큰 장점은 아무것도 없기 때문에 단순하고 빠르다는 점입니다. 현재 대부분이 TCP기반으로 되어있기 때문에 TCP를 수정하기는 어려운 경우가 있습니다. 그럴때 UDP를 추가 해 최적화를 돕는데 사용할 수 있습니다.
 
 
-
 참고자료:<br></br> 인프런 강의 [모든 개발자를 위한 HTTP 웹 기본 지식](https://www.inflearn.com/course/http-%EC%9B%B9-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC), 강영한<br></br>
 그림으로 배우는 Http, NetWork Basic, 우에노 센
 
