@@ -1,20 +1,39 @@
 ---
-title: API 메서드
-date: '2022-10-26'
-tags: ['api']
+title: 파이썬 for-else 문
+date: '2022-11-07'
+tags: ['python','반복문']
 draft: false
-summary: API 메서드에는 어떤 것이 있을까?
+summary: for-else 반복문을 통해 동일한 값이 여러개 있는 경우에도 확인해보자
 ---
 
-## API 메서드란? 
+## Intro 
 
-앞서 IP를 통해 요청을 보내고 응답을 받는 통신하는 방식에 대해 살펴보았습니다. 그런데 IP의 주소는 기억하기가 어렵습니다. 만약 우리가 자주 방문하는 웹사이트의 IP주소를 모두 외워서 접속해야 한다면, 한정적인 사이트에만 접속하게 될 것 입니다. 또한 IP는 변경될 가능성이 있습니다. 이러한 문제를 해결하기 위해 DNS를 사용합니다.
+셀레니움을 통해 특정 영역 전체에 있는 항목에 대한 값을 검증하려고 하다가, 반복문 중 for-else문을 사용해 확인할 수 있음을 알게되어 알게 된 내용을 정리해 보려고 합니다.
 
-### GET 
+## for-else 문 
 
-- 리소스 조회
-- * 리소스 이름이  representation으로 바뀜
-- 서버에 전달하고 싶은 데이터는 query(쿼리 파라미터, 쿼리 스트링)을 통해서 전달
-- 메시지 바디를 사용해서 데이터를 전달할 수 있지만, 지원하지 않는곳이 많아서 권장하지 않음
+일반적인 반복문인 for 문은 아래와 같이 구성됩니다.
 
-참고자료:<br></br> 인프런 강의 [모든 개발자를 위한 HTTP 웹 기본 지식](https://www.inflearn.com/course/http-%EC%9B%B9-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC)
+```python
+lst = [dog, cat, sheep]
+for i in lst:
+    print(i)
+```
+
+여기서 제가 궁금했던 부분은 동일한 영역(예시에서는 리스트) 안에 값이 전부 동일한 경우 그 부분을 반복문으로 각각의 값이 일치하는지 였습니다. 그래서 for-else문을 통해 구현해 보았습니다.
+
+```python
+lst = [apple, apple, apple, apple]
+
+for i in lst:
+    if i != "apple":
+         print("There's more than apple")
+        break
+else:
+    print("There's only apple here")
+```
+위의 반복문을 실행하면,
+lst안에 `apple`이 아닌 값이 있는 경우 `print("There's more than apple")` 프린트문을 실행한다. 
+lst 안에 `apple` 만 있는 경우 `break`를 통해 반복문을 나와 `print("There's only apple here")`프린트 문을 출력하게 된다.
+
+참고자료:<br></br> http://pyengine.blogspot.com/2019/12/for-else.html
