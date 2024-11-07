@@ -10,50 +10,59 @@ summary: '팀 프로젝트 설계(22조 3프제)'
 
 ## 1. API 명세서
 
-| MVP         | 기능                | Method | 접근권한                          | Resources | URL                                          |
-|-------------|-------------------------|--------|-----------------------------------|-----------|----------------------------------------------|
-| 회원 관리   | 회원정보 수정           | PUT    | CUSTOMER, OWNER, MANAGER, MASTER | /users    | /api/users/{userId}                         |
-|             | 회원정보 조회           | GET    | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/users/me/info                          |
-|             | 회원 탈퇴               | PATCH  | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/users/{userId}                         |
-| 인증        | 회원가입               | POST   | CUSTOMER, OWNER, MANAGER, MASTER | /auth     | /api/auth/signup                            |
-|             | 로그인                 | POST   | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/auth/signin                            |
-|             | 로그아웃               | POST   | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/users/signout                          |
-|             | 토큰 재발급             | POST   | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/auth/refresh                           |
-| 음식점 관리 | 음식점 등록             | POST   | MANAGER, MASTER                  | /shops    | /api/shops                                  |
-|             | 음식점 수정             | PUT    | MANAGER, MASTER                  |           | /api/shops{shopId}                          |
-|             | 음식점 삭제             | PATCH  | MANAGER, MASTER                  |           | /api/shops{shopId}                          |
-|             | 음식점 목록 조회        | GET    |                                   |           | /api/shops/                                 |
-|             | 음식점 상세 조회        | GET    | CUSTOMER                         |           | /api/shops/{shopId}                         |
-|             | 메뉴 등록               | POST   | OWNER, MANAGER, MASTER           | /menus    | /api/shops/{shopId}/menus                   |
-|             | 메뉴 수정               | PUT    | OWNER, MANAGER, MASTER           |           | /api/shops/{shopId}/menus/{menuId}          |
-|             | 메뉴 삭제(숨김)          | PATCH  | OWNER, MANAGER, MASTER           |           | /api/shops/{shopId}/menus/{menuId}          |
-|             | 메뉴 조회 (가게별)      | GET    | OWNER, MANAGER, MASTER           |           | /api/shops/{shopId}/menus/{menuId}          |
-| 주문 관리   | 주문 등록               | POST   | CUSTOMER                         | /orders   | /api/shops/{shopId}/orders                  |
-|             | 주문 상태 변경           | PATCH  | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/shops/{shopId}/orders/{orderId}/status |
-|             | 주문 취소 요청           | POST   | CUSTOMER                         |           | /api/shops/{shopId}/orders/{orderId}/cancel |
-|             | 주문 상세 조회           | GET    | CUSTOMER                         |           | /api/users/me/orders                        |
-|             | 매장별 주문 조회         | GET    | OWNER, MANAGER, MASTER           |           | /api/shops/{shopId}/orders                  |
-| 결제 관리   | 결제 요청               | POST   | CUSTOMER                         | /payments | /api/payments                               |
-|             | 결제 취소               | POST   | CUSTOMER                         |           | /api/payments/{paymentId}/cancel            |
-|             | 결제 조회               | GET    | CUSTOMER                         |           | /api/payments/{paymentId}                   |
-| 배송지 관리 | 배송지 등록             | POST   | CUSTOMER                         | /addresses| /api/users/me/addresses                     |
-|             | 배송지 수정             | PUT    | CUSTOMER                         |           | /api/users/me/addresses/{addressId}         |
-|             | 배송지 삭제             | PATCH  | CUSTOMER                         |           | /api/users/me/addresses/{addressId}         |
-|             | 배송지 조회             | GET    | CUSTOMER                         |           | /api/users/me/addresses                     |
-| 음식 카테고리| 카테고리 등록           | POST   | MANAGER, MASTER                  | /categories| /api/categories                             |
-|             | 카테고리 수정           | PUT    | MANAGER, MASTER                  |           | /api/admin/categories/{id}                  |
-|             | 카테고리 삭제           | PATCH  | MANAGER, MASTER                  |           | /api/admin/categories/{id}                  |
-|             | 카테고리 조회           | GET    | MANAGER, MASTER                  |           | /api/admin/categories                       |
-|             | (사용자) 카테고리별 음식점 조회 | GET | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/categories/{id}/shops                  |
-| 리뷰 관리   | 리뷰 등록               | POST   | CUSTOMER, OWNER, MANAGER, MASTER | /reviews  | /api/reviews                                |
-|             | 리뷰 수정               | PUT    | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/reviews/{reviewId}                     |
-|             | 리뷰 조회               | GET    | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/reviews/{reviewId}                     |
-|             | 매장별 리뷰 조회         | GET    | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/shops/{shopId}/reviews                 |
-|             | 리뷰 삭제               | PATCH  | CUSTOMER, OWNER, MANAGER, MASTER |           | /api/reviews/{reviewId}                     |
-| AI 상품 설명 | 상품 설명 등록          | POST   | OWNER, MANAGER, MASTER           | /ai       | /api/ai/descriptions                        |
-|             | 상품 설명 조회          | GET    | OWNER, MANAGER, MASTER           |           | /api/ai/descriptions                        |
-
-
+### API Endpoints
+| MVP Feature | Method | 접근권한 | Resources URL | 설명 |
+|------------|--------|-----------|---------------|------|
+| **회원 관리** | | | | |
+| 회원정보 수정 | PUT | CUSTOMER, OWNER, MANAGER, MASTER | /api/users/{userId} | |
+| 회원정보 조회 | GET | CUSTOMER, OWNER, MANAGER, MASTER | /api/users/me/info | |
+| 회원 탈퇴 | PATCH | CUSTOMER, OWNER, MANAGER, MASTER | /api/users/{userId} | |
+| **인증** | | | | |
+| 회원가입 | POST | CUSTOMER, OWNER, MANAGER, MASTER | /api/auth/signup | |
+| 로그인 | POST | CUSTOMER, OWNER, MANAGER, MASTER | /api/auth/signin | |
+| 로그아웃 | POST | CUSTOMER, OWNER, MANAGER, MASTER | /api/users/signout | |
+| 토큰 재발급 | POST | CUSTOMER, OWNER, MANAGER, MASTER | /api/auth/refresh | |
+| **음식점 관리** | | | | |
+| 음식점 등록 | POST | MANAGER, MASTER | /api/shops | |
+| 음식점 수정 | PUT | MANAGER, MASTER | /api/shops/{shopId} | |
+| 음식점 삭제 | PATCH | MANAGER, MASTER | /api/shops/{shopId} | |
+| 음식점 목록 조회 | GET | - | /api/shops/ | |
+| 음식점 상세 조회 | GET | CUSTOMER | /api/shops/{shopId} | |
+| **메뉴** | | | | |
+| 메뉴 등록 | POST | OWNER, MANAGER, MASTER | /api/shops/{shopId}/menus | |
+| 메뉴 수정 | PUT | OWNER, MANAGER, MASTER | /api/shops/{shopId}/menus/{menuId} | |
+| 메뉴 삭제(숨김) | PATCH | OWNER, MANAGER, MASTER | /api/shops/{shopId}/menus/{menuId} | |
+| 메뉴 조회 (가게별) | GET | OWNER, MANAGER, MASTER | /api/shops/{shopId}/menus/{menuId} | |
+| **주문 관리** | | | | |
+| 주문 등록 | POST | CUSTOMER | /api/shops/{shopId}/orders | |
+| 주문 상태 변경 | PATCH | CUSTOMER, OWNER, MANAGER, MASTER | /api/shops/{shopId}/orders/{orderId}/status | |
+| 주문 취소 요청 | POST | CUSTOMER | /api/shops/{shopId}/orders/{orderId}/cancel | |
+| 주문 상세 조회 | GET | CUSTOMER | /api/users/me/orders | |
+| 매장별 주문 조회 | GET | OWNER, MANAGER, MASTER | /api/shops/{shopId}/orders | |
+| **결제 관리** | | | | |
+| 결제 요청 | POST | CUSTOMER | /api/payments | |
+| 결제 취소 | POST | CUSTOMER | /api/payments/{paymentId}/cancel | |
+| 결제 조회 | GET | CUSTOMER | /api/payments/{paymentId} | |
+| **배송지 관리** | | | | |
+| 배송지 등록 | POST | CUSTOMER | /api/users/me/addresses | |
+| 배송지 수정 | PUT | CUSTOMER | /api/users/me/addresses/{addressId} | |
+| 배송지 삭제 | PATCH | CUSTOMER | /api/users/me/addresses/{addressId} | |
+| 배송지 조회 | GET | CUSTOMER | /api/users/me/addresses | |
+| **음식 카테고리** | | | | |
+| 카테고리 등록 | POST | MANAGER, MASTER | /api/categories | |
+| 카테고리 수정 | PUT | MANAGER, MASTER | /api/admin/categories/{id} | |
+| 카테고리 삭제 | PATCH | MANAGER, MASTER | /api/admin/categories/{id} | |
+| 카테고리 조회 | GET | MANAGER, MASTER | /api/admin/categories | |
+| 카테고리별 음식점 조회 | GET | CUSTOMER, OWNER, MANAGER, MASTER | /api/categories/{id}/shops | |
+| **리뷰 관리** | | | | |
+| 리뷰 등록 | POST | CUSTOMER, OWNER, MANAGER, MASTER | /api/reviews | |
+| 리뷰 수정 | PUT | CUSTOMER, OWNER, MANAGER, MASTER | /api/reviews/{reviewId} | |
+| 리뷰 조회 | GET | CUSTOMER, OWNER, MANAGER, MASTER | /api/reviews/{reviewId} | |
+| 매장별 리뷰 조회 | GET | CUSTOMER, OWNER, MANAGER, MASTER | /api/shops/{shopId}/reviews | |
+| 리뷰 삭제 | PATCH | CUSTOMER, OWNER, MANAGER, MASTER | /api/reviews/{reviewId} | |
+| **AI 상품 설명** | | | | |
+| 상품 설명 등록 | POST | OWNER, MANAGER, MASTER | /api/ai/descriptions | |
+| 상품 설명 조회 | GET | OWNER, MANAGER, MASTER | /api/ai/descriptions | |
 
 ## 테이블 명세서
 ### p_users 테이블
