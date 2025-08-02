@@ -1,7 +1,7 @@
 ---
 name: 손예지(Liv)
 avatar: /static/images/avatar.jpg
-occupation: QA Engineer
+occupation: Backend Developer
 # company: Stanford University
 email: handyejee14@gmail.com
 linkedin: https://www.linkedin.com/in/yejee-son/
@@ -10,4 +10,4 @@ github: https://github.com/handyejee
 
 ## Introduction
 
-3년차 QA 엔지니어로 일하고 있습니다. 사람들의 구매 journey에 관심이 많습니다. 다양한 검증을 통해 제품의 품질을 개선하는데 기여하고 싶습니다.
+커머스 도메인에서 5년간 QA 엔지니어로 사용자 관점에서 테스트 업무를 수행한 경험이 있습니다. 문제를 정의하고 파고들어 해결하는 것을 좋아합니다.

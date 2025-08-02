@@ -2,72 +2,109 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import siteMetadata from '@/data/siteMetadata'
 
-const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl }) => {
+const CommonSEO = ({
+  title,
+  description,
+  ogType,
+  ogImage,
+  twImage,
+  canonicalUrl,
+  publishedTime,
+  modifiedTime,
+  tags = [],
+}) => {
   const router = useRouter()
+  const fullUrl = `${siteMetadata.siteUrl}${router.asPath}`
+
   return (
     <Head>
+      {/* 기본 메타 태그 */}
       <title>{title}</title>
-      <meta name="robots" content="follow, index" />
-      <meta name="description" content={description} />
-      <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
-      <meta property="og:type" content={ogType} />
-      <meta property="og:site_name" content={siteMetadata.title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:title" content={title} />
-      {ogImage.constructor.name === 'Array' ? (
-        ogImage.map(({ url }) => <meta property="og:image" content={url} key={url} />)
+      <meta name='description' content={description} />
+      <meta name='robots' content='follow, index' />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
+
+      {/* 언어 및 지역 */}
+      <meta name='language' content={siteMetadata.language || 'en'} />
+      <html lang={siteMetadata.language || 'en'} />
+
+      {/* Open Graph */}
+      <meta property='og:url' content={fullUrl} />
+      <meta property='og:type' content={ogType} />
+      <meta property='og:site_name' content={siteMetadata.title} />
+      <meta property='og:description' content={description} />
+      <meta property='og:title' content={title} />
+      <meta property='og:locale' content={siteMetadata.locale || 'en_US'} />
+
+      {/* 이미지 처리 개선 */}
+      {Array.isArray(ogImage) ? (
+        ogImage.map(({ url }, index) => <meta property='og:image' content={url} key={index} />)
       ) : (
-        <meta property="og:image" content={ogImage} key={ogImage} />
+        <meta property='og:image' content={ogImage} />
       )}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content={siteMetadata.twitter} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={twImage} />
-      <link
-        rel="canonical"
-        href={canonicalUrl ? canonicalUrl : `${siteMetadata.siteUrl}${router.asPath}`}
+
+      {/* Twitter Card - 선택사항 */}
+      {siteMetadata.twitter && (
+        <>
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:site' content={siteMetadata.twitter} />
+          <meta name='twitter:creator' content={siteMetadata.twitter} />
+          <meta name='twitter:title' content={title} />
+          <meta name='twitter:description' content={description} />
+          <meta name='twitter:image' content={twImage} />
+        </>
+      )}
+
+      {/* Article 관련 메타태그 */}
+      {publishedTime && <meta property='article:published_time' content={publishedTime} />}
+      {modifiedTime && <meta property='article:modified_time' content={modifiedTime} />}
+      {siteMetadata.author && <meta property='article:author' content={siteMetadata.author} />}
+
+      {/* 태그들 */}
+      {tags.map((tag, index) => (
+        <meta property='article:tag' content={tag} key={index} />
+      ))}
+
+      {/* Canonical URL */}
+      <link rel='canonical' href={canonicalUrl ? canonicalUrl : fullUrl} />
+
+      {/* 추가 SEO 메타태그 */}
+      <meta name='author' content={siteMetadata.author} />
+      <meta name='publisher' content={siteMetadata.author} />
+
+      {/* 구조화된 데이터를 위한 JSON-LD */}
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: siteMetadata.title,
+            url: siteMetadata.siteUrl,
+            description: siteMetadata.description,
+            author: {
+              '@type': 'Person',
+              name: siteMetadata.author,
+            },
+          }),
+        }}
       />
     </Head>
   )
 }
 
-export const PageSEO = ({ title, description }) => {
+export const PageSEO = ({ title, description, url }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
-  const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
+
   return (
     <CommonSEO
       title={title}
       description={description}
-      ogType="website"
+      ogType='website'
       ogImage={ogImageUrl}
-      twImage={twImageUrl}
+      twImage={siteMetadata.twitter ? ogImageUrl : null}
+      canonicalUrl={url}
     />
-  )
-}
-
-export const TagSEO = ({ title, description }) => {
-  const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
-  const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
-  const router = useRouter()
-  return (
-    <>
-      <CommonSEO
-        title={title}
-        description={description}
-        ogType="website"
-        ogImage={ogImageUrl}
-        twImage={twImageUrl}
-      />
-      <Head>
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title={`${description} - RSS feed`}
-          href={`${siteMetadata.siteUrl}${router.asPath}/feed.xml`}
-        />
-      </Head>
-    </>
   )
 }
 
@@ -80,10 +117,11 @@ export const BlogSEO = ({
   url,
   images = [],
   canonicalUrl,
+  tags = [],
 }) => {
-  const router = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
+
   let imagesArr =
     images.length === 0
       ? [siteMetadata.socialBanner]
@@ -91,36 +129,32 @@ export const BlogSEO = ({
       ? [images]
       : images
 
-  const featuredImages = imagesArr.map((img) => {
-    return {
-      '@type': 'ImageObject',
-      url: img.includes('http') ? img : siteMetadata.siteUrl + img,
-    }
-  })
+  const featuredImages = imagesArr.map((img) => ({
+    '@type': 'ImageObject',
+    url: img.includes('http') ? img : siteMetadata.siteUrl + img,
+  }))
 
-  let authorList
-  if (authorDetails) {
-    authorList = authorDetails.map((author) => {
-      return {
+  const authorList = authorDetails
+    ? authorDetails.map((author) => ({
         '@type': 'Person',
         name: author.name,
-      }
-    })
-  } else {
-    authorList = {
-      '@type': 'Person',
-      name: siteMetadata.author,
-    }
-  }
+      }))
+    : [
+        {
+          '@type': 'Person',
+          name: siteMetadata.author,
+        },
+      ]
 
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,
     },
     headline: title,
+    description: summary,
     image: featuredImages,
     datePublished: publishedAt,
     dateModified: modifiedAt,
@@ -133,26 +167,27 @@ export const BlogSEO = ({
         url: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
       },
     },
-    description: summary,
+    keywords: tags.join(', '),
   }
 
-  const twImageUrl = featuredImages[0].url
+  const twImageUrl = siteMetadata.twitter ? featuredImages[0].url : null
 
   return (
     <>
       <CommonSEO
         title={title}
         description={summary}
-        ogType="article"
+        ogType='article'
         ogImage={featuredImages}
         twImage={twImageUrl}
         canonicalUrl={canonicalUrl}
+        publishedTime={publishedAt}
+        modifiedTime={modifiedAt}
+        tags={tags}
       />
       <Head>
-        {date && <meta property="article:published_time" content={publishedAt} />}
-        {lastmod && <meta property="article:modified_time" content={modifiedAt} />}
         <script
-          type="application/ld+json"
+          type='application/ld+json'
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData, null, 2),
           }}
