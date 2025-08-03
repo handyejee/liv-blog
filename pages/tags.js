@@ -19,12 +19,7 @@ export default function Tags({ tags, posts }) {
   // 각 태그별 포스트들 가져오기
   const getPostsByTag = (tag) => {
     return posts
-      .filter(
-        (post) =>
-          post.draft !== true &&
-          post.tags &&
-          post.tags.map((t) => kebabCase(t)).includes(kebabCase(tag))
-      )
+      .filter((post) => post.draft !== true && post.tags?.includes(tag))
       .sort((a, b) => new Date(b.date) - new Date(a.date)) // 최신순 정렬
   }
 
