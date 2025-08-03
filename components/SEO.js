@@ -108,6 +108,20 @@ export const PageSEO = ({ title, description, url }) => {
   )
 }
 
+export const TagSEO = ({ title, description }) => {
+  const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
+
+  return (
+    <CommonSEO
+      title={title}
+      description={description || siteMetadata.description}
+      ogType='website'
+      ogImage={ogImageUrl}
+      twImage={siteMetadata.twitter ? ogImageUrl : null}
+    />
+  )
+}
+
 export const BlogSEO = ({
   authorDetails,
   title,
