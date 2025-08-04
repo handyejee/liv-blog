@@ -1,8 +1,8 @@
 const siteMetadata = {
-  title: 'Liv Blog',
+  title: 'LivLog 기록하는 개발자',
   author: 'Yejee Son',
-  headerTitle: 'LivBlog',
-  description: 'QA로 일하며 배운것과 생각들을 정리하고 있습니다',
+  headerTitle: 'LivLog',
+  description: 'QA로 일하다 개발자가 되었습니다. 개발자로서 성장하는 과정을 기록합니다.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://liv-blog.vercel.app/',
