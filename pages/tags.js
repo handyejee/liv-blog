@@ -34,7 +34,7 @@ export default function Tags({ tags, posts }) {
             태그 검색
           </h1>
           <p className='text-lg leading-7 text-gray-500 dark:text-gray-400'>
-            태그별로 정리된 모든 포스트를 확인하세요
+            태그별로 정리된 모든 글을 확인하세요
           </p>
         </div>
 
