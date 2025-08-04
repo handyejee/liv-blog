@@ -1,7 +1,7 @@
 ---
 title: '자바스크립트 : 프로그램에서 입/출력 받는 방법'
 date: '2023-03-25'
-tags: ['javascript']
+tags: ['Frontend', 'Javascript']
 draft: false
 summary: 'alert(), confirm(), prompt()로 동작 확인하는 법'
 ---

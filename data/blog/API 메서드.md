@@ -1,7 +1,7 @@
 ---
 title: API 메서드
 date: '2022-10-26'
-tags: ['api']
+tags: ['web', 'HTTP']
 draft: false
 summary: API 메서드에는 어떤 것이 있을까?
 ---

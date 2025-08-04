@@ -1,7 +1,7 @@
 ---
 title: 파이썬 for-else 문
 date: '2022-11-07'
-tags: ['python','반복문']
+tags: ['python']
 draft: false
 summary: for-else 반복문을 통해 동일한 값이 여러개 있는 경우에도 확인해보자
 ---

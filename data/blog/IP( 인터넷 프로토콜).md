@@ -1,7 +1,7 @@
 ---
 title: 인터넷 네트워크 - IP통신
 date: '2022-08-01'
-tags: ['web', 'IP']
+tags: ['web', 'HTTP']
 draft: false
 summary: 클라이언트와 서버간의 통신 사이에 어떤 일이 일어날까?
 ---

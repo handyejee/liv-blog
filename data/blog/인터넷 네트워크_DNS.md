@@ -1,7 +1,7 @@
 ---
 title: 인터넷 네트워크 - DNS
 date: '2022-09-04'
-tags: ['web', 'DNS']
+tags: ['web', 'HTTP']
 draft: false
 summary: DNS는 어떤 역할을 할까?
 ---

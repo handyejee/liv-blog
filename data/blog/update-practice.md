@@ -1,7 +1,7 @@
 ---
 title: 블로그를 코드로 업로드 하기
 date: '2022-07-24'
-tags: ['python', 'selenium']
+tags: ['생각정리', 'Markdown']
 draft: false
 summary: 블로그로 코드로 업로드 하는건 어떤걸까?
 ---
