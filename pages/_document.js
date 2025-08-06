@@ -4,6 +4,7 @@ class MyDocument extends Document {
     return (
       <Html lang='en' className='scroll-smooth'>
         <Head>
+          <meta name='test-document' content='applied' />
           <link rel='icon' href='/static/favicons/favicon.ico' />
           <link rel='apple-touch-icon' sizes='76x76' href='/static/favicons/apple-touch-icon.png' />
           <link
