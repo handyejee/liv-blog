@@ -11,14 +11,10 @@
 # next.js
 /.next/
 /out/
-!public/sitemap.xml
 .vercel
 
 # production
 /build
-*.xml
-# rss feed
-/public/feed.xml 
 
 # misc
 .DS_Store
@@ -34,3 +30,10 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# rss feed
+/public/feed.xml 
+
+# xml files
+*.xml
+!public/sitemap.xml
