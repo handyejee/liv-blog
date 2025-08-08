@@ -5,7 +5,7 @@ const siteMetadata = {
   description: 'QA로 일하다 개발자가 되었습니다. 개발자로서 성장하는 과정을 기록합니다.',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://liv-blog.vercel.app/',
+  siteUrl: 'https://livlogs.vercel.app',
   siteRepo: 'https://github.com/handyejee/liv-blog',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.jpg',
