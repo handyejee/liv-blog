@@ -18,7 +18,7 @@ summary: 성취하지 않아도 배움이 있다
 
 저희 팀은 지역 균형 발전이라는 대주제에서 인구소멸문제라는 키워드에 주목했고, 인구소멸문제에 대한 사례를 찾아보기 위해 사회과학도였던 장점을 살려 원문검색을 통해 지역 균형을 위해 국내 정책과 해외 사례를 검색했습니다.
 
-<img src="./static/images/project/research_img" alt="Research Image" width="600" height="500">
+<img src="./static/images/project/research_img" alt="Research Image" width="600" height="500"/>
 *리서치의 흔적들*
 
 이 때 찾아본 자료들이 기획서의 기초자료로 활용되었습니다. 쓸모없는 경험은 없구나 하고 다시한번 느낄 수 있었던 순간이었습니다.
