@@ -6,6 +6,7 @@ draft: false
 summary: Value Object를 사용할때 재정의 해야 하는 이유
 ---
 > **💡 핵심질문 1:** equals와 hashCode를 재정의 하는 이유?
+
 > **💡 핵심질문 2:** 왜 equals를 재정의하면 hashCode도 함께 재정의해야 할까?
 
 값 객체(Value Object)에 대한 강의를 듣다가, equals & hashCode에 대한 부분이 나왔습니다. 여러번 살펴봤었는데 매번 새롭게 느껴져 정리를 해보았습니다.
