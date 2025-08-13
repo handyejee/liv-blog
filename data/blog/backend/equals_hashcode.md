@@ -5,10 +5,8 @@ tags: ['Backend', 'java']
 draft: false
 summary: Value Object를 사용할때 재정의 해야 하는 이유
 ---
-```text
-핵심질문 1: equals와 hashCode를 재정의 하는 이유?
-핵심질문 2 : 왜 equals를 재정의하면 hashCode도 함께 재정의해야 할까?
-```
+> **💡 핵심질문 1:** equals와 hashCode를 재정의 하는 이유?
+> **💡 핵심질문 2:** 왜 equals를 재정의하면 hashCode도 함께 재정의해야 할까?
 
 값 객체(Value Object)에 대한 강의를 듣다가, equals & hashCode에 대한 부분이 나왔습니다. 여러번 살펴봤었는데 매번 새롭게 느껴져 정리를 해보았습니다.
 
@@ -52,13 +50,11 @@ An instance method in a subclass with the same signature (name, plus the number 
 하위 클래스에서 상위 클래스의 인스턴스 메서드와 같은 시그니처(이름, 매개변수 개수와 타입)와 리턴타입을 가진 인스턴스 메서드는 상위 클래스의 메서드를 재정의한다. 
 ```
 
-*출처 : https://docs.oracle.com/javase/tutorial/java/IandI/override.html*
-
 여기서 알 수 있는것은 재정의가 메서드 시그니처가 같으면 자동으로 일어난다는 것입니다.
 
 본래의 질문으로 다시 돌아와 equals와 hashCode를 재정의 한다는 것은 equals()나 hashCode() 메서드를 사용하는 것과 어떤 차이가 있을까요?
 
-equals() 메서드 사용
+### equals() 메서드 사용
 
 ```java
 public class Person {
@@ -73,9 +69,7 @@ System.out.println(p1.equals(p2)); // false (다른 메모리 주소)
 System.out.println(p1 == p2);      // false (참조 비교)
 ```
 
-equals 메서드를 재정의 없이 사용했을때 p1과 p2 객체를 출력해보면 각각 김철수와 25라는 같은 값이 들어있지만 값이 아닌 메모리 주소를 비교하기 때문에 false를 반환합니다.
-
-`java.lang.Object` 클래스의 equals 구현체를 살펴보면 메모리 주소를 비교하고 있기 때문입니다.
+equals 메서드를 재정의 없이 사용했을때 p1과 p2 객체를 출력해보면 각각 김철수와 25라는 같은 값이 들어있지만 값이 아닌 메모리 주소를 비교하기 때문에 false를 반환합니다. `java.lang.Object` 클래스의 equals 구현체에서 메모리 주소를 비교하고 있기 때문입니다.
 
 ```java
 public boolean equals(Object obj) {
@@ -171,7 +165,9 @@ public boolean containsKey(Object key) {
 
 equals & hashCode는 자바의 Object 객체에 이미 존재하는 equals()와 hashCode() 메서드를 재정의해 Value Object에서 값이 같은 경우 같은 값으로 간주하는 개념이다.
 
-참고자료:[Overriding and Hiding Methods](https://docs.oracle.com/javase/tutorial/java/IandI/override.html)
+참고자료:
+
+[Overriding and Hiding Methods](https://docs.oracle.com/javase/tutorial/java/IandI/override.html)
 
 [Annotation Type Override](https://docs.oracle.com/javase/tutorial/java/IandI/override.html)
 
