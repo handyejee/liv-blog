@@ -8,6 +8,8 @@ import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
+const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
+
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
@@ -61,16 +63,6 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                       <dl className='whitespace-nowrap text-sm font-medium leading-5'>
                         <dt className='sr-only'>Name</dt>
                         <dd className='text-gray-900 dark:text-gray-100'>{author.name}</dd>
-                        <dt className='sr-only'>Twitter</dt>
-                        <dd>
-                          {author.twitter && (
-                            <Link
-                              href={author.twitter}
-                              className='text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'>
-                              {author.twitter.replace('https://twitter.com/', '@')}
-                            </Link>
-                          )}
-                        </dd>
                       </dl>
                     </li>
                   ))}
