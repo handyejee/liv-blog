@@ -6,7 +6,7 @@ draft: false
 summary: 혼자 공부하는 컴퓨터구조 운영체제(9-10장)
 ---
 본 시리즈는 혼자 공부하는 컴퓨터 구조 책을 스터디 하며 남기는 기록 중 다섯번째 시리즈 입니다.
-[이전 시리즈 보러가기](https://liv-blog.vercel.app/blog/cs/backup_memory)
+[이전 시리즈 보러가기](https://livlogs.vercel.app/blog/cs/backup_memory)
 
 - 학습목표
 	1. 커널이란?
