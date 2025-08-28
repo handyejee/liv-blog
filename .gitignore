@@ -36,4 +36,4 @@ yarn-error.log*
 
 # xml files
 *.xml
-!public/sitemap.xml
+public/sitemap.xml
