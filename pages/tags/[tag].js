@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   return {
     paths: Object.keys(tags).map((tag) => ({
       params: {
-        tag,
+        tag: kebabCase(tag),
       },
     })),
     fallback: false,
@@ -29,6 +29,11 @@ export async function getStaticProps({ params }) {
     (post) => post.draft !== true && post.tags.map((t) => kebabCase(t)).includes(params.tag)
   )
 
+  // Find the original tag name to display
+  const allTags = await getAllTags('blog')
+  const originalTag =
+    Object.keys(allTags).find((tag) => kebabCase(tag) === params.tag) || params.tag
+
   // rss
   if (filteredPosts.length > 0) {
     const rss = generateRss(filteredPosts, `tags/${params.tag}/feed.xml`)
@@ -37,17 +42,17 @@ export async function getStaticProps({ params }) {
     fs.writeFileSync(path.join(rssPath, 'feed.xml'), rss)
   }
 
-  return { props: { posts: filteredPosts, tag: params.tag } }
+  return { props: { posts: filteredPosts, tag: params.tag, originalTag } }
 }
 
-export default function Tag({ posts, tag }) {
-  // Capitalize first letter and convert space to dash
-  const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
+export default function Tag({ posts, tag, originalTag }) {
+  // Use the original tag name for display
+  const title = originalTag || tag
   return (
     <>
       <TagSEO
-        title={`${tag} - ${siteMetadata.author}`}
-        description={`${tag} tags - ${siteMetadata.author}`}
+        title={`${originalTag || tag} - ${siteMetadata.author}`}
+        description={`${originalTag || tag} tags - ${siteMetadata.author}`}
       />
       <ListLayout posts={posts} title={title} />
     </>
