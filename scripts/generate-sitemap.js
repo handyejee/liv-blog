@@ -7,7 +7,7 @@ const siteMetadata = require('../data/siteMetadata')
 async function getAllTags() {
   const files = await globby(['data/blog/**/*.mdx', 'data/blog/**/*.md'])
   let tagCount = {}
-  
+
   files.forEach((file) => {
     const source = fs.readFileSync(file, 'utf8')
     const { data } = matter(source)
@@ -21,7 +21,7 @@ async function getAllTags() {
       })
     }
   })
-  
+
   return tagCount
 }
 
@@ -57,39 +57,32 @@ function formatDate(date) {
   const allTags = await getAllTags()
   const tagPages = Object.keys(allTags).map((tag) => kebabCase(tag))
 
-  const staticUrls = pages
-    .map((page) => {
-      const path = page
-        .replace('pages/', '/')
-        .replace('.js', '')
-        .replace('.tsx', '')
-      const route = path === '/index' ? '' : path
+  const staticUrls = pages.map((page) => {
+    const path = page.replace('pages/', '/').replace('.js', '').replace('.tsx', '')
+    const route = path === '/index' ? '' : path
 
-      return `  <url>
+    return `  <url>
     <loc>${siteMetadata.siteUrl}${route}</loc>
     <lastmod>${formatDate(new Date())}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>`
-    })
+  })
 
   const postUrls = posts
     .map((post) => {
       const source = fs.readFileSync(post, 'utf8')
       const fm = matter(source)
-      
+
       // Skip drafts and canonical URLs
       if (fm.data.draft || fm.data.canonicalUrl) {
         return null
       }
 
-      const slug = post
-        .replace('data/blog/', '')
-        .replace('.mdx', '')
-        .replace('.md', '')
+      const slug = post.replace('data/blog/', '').replace('.mdx', '').replace('.md', '')
 
       const lastmod = fm.data.lastmod || fm.data.date
-      
+
       return `  <url>
     <loc>${siteMetadata.siteUrl}/blog/${slug}</loc>
     <lastmod>${formatDate(lastmod)}</lastmod>
