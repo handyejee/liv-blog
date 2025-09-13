@@ -22,7 +22,7 @@ summary: 오픈 소스 세계 탐방기
 
 <img src="/static/images/project/contributing_opensource.JPG" alt="Research Image" width="300" height="400"/>
 
-[Debugging Teams](https://github.com/fitz/debuggingteams/issues/2) 라는 책을 번역하게 되었는데, 무엇보다 개발자로서 다른 동료와 협업하는 방법을 다루고 있는 책이었기 때문에 배울 점이 많았습니다. 구어체가 아닌 영어로 된 문서를 번역하는 것은 처음이어서 최대한 기존에 번역된 챕터와 전체 문맥을 해치지 않도록 여러 번 읽어봤고, 함께 번역하는 분들이 가져가신 원칙들을 일관성 있게 지키려고 노력했습니다. 그리고 두개의 PR로 번역에 기여하게 되었습니다.
+[Debugging Teams](https://ita9naiwa.github.io/debuggingteams/) 라는 책을 번역하게 되었는데, 무엇보다 개발자로서 다른 동료와 협업하는 방법을 다루고 있는 책이었기 때문에 배울 점이 많았습니다. 구어체가 아닌 영어로 된 문서를 번역하는 것은 처음이어서 최대한 기존에 번역된 챕터와 전체 문맥을 해치지 않도록 여러 번 읽어봤고, 함께 번역하는 분들이 가져가신 원칙들을 일관성 있게 지키려고 노력했습니다. 그리고 두개의 PR로 번역에 기여하게 되었습니다.
 
 [챕터2 번역 PR](https://github.com/ita9naiwa/debuggingteams/pull/3)
 
