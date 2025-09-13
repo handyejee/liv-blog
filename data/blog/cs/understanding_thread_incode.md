@@ -2,7 +2,7 @@
 title: 스레드를 이해하기
 date: '2025-09-13'
 tags: ['CS', '운영체제']
-draft: true
+draft: false
 summary: 스레드를 
 ---
 
