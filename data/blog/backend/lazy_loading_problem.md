@@ -226,7 +226,7 @@ public static CounselorListResponse from(Counselor counselor) {
 ```
 
 1. `counselor.getSpecializations()`  에는 위에서 살펴본 `@ElementCollection` 어노테이션을 통해 래퍼객체가 담겨 있다는 것을 확인했습니다.
-2. `from()` 정적 팩토리 메서드가 호출될 때 new ArrayList<> 는 내부 객체를 복사하려는 시도를 합니다. 강제 지연 초기화(Lazy Initialization)
+2. `from()` 정적 팩토리 메서드가 호출될 때 `new ArrayList<>` 는 내부 객체를 복사하려는 시도를 합니다. 강제 지연 초기화(Lazy Initialization)
 3. 지연 초기화 요청을 받은 래퍼 객체는 활성화된 Hibernate Session이 있는지 확인한 후, 부모 엔티티의 ID로 컬렉션 데이터를 조회하는 쿼리를 실행합니다.
 
     ```sql
