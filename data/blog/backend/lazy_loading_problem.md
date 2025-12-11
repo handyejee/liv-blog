@@ -52,77 +52,7 @@ LazyLoading이 동작하는 방식은 다음과 같습니다.
 
 ### `@Transactional` 어노테이션 동작과정
 
-```mermaid
-sequenceDiagram
-    autonumber
-    
-    participant Client as 클라이언트
-    participant Proxy as 프록시 객체<br/>(AOP)
-    participant TxInterceptor as TransactionInterceptor<br/>(트랜잭션 관리)
-    participant TxManager as Transaction Manager
-    participant Service as 실제 Service 객체<br/>(비즈니스 로직)
-    participant Repository as JpaRepository
-    
-    Note over Proxy,Service: 애플리케이션 시작 시 (빈 초기화)
-    rect rgb(240, 248, 255)
-        Note right of Proxy: BeanPostProcessor가<br/>@Transactional 감지<br/>(Java Reflection 사용)
-        Proxy->>Proxy: 프록시 객체 생성
-        Note right of Proxy: 프록시를 Spring Bean으로 등록<br/>(원본 대신)
-    end
-    
-    Note over Client,Repository: 런타임 (메서드 호출)
-    
-    Client->>Proxy: getCounselorById(counselorId) 호출
-    Note right of Client: 실제로는 프록시가 호출됨
-    
-    Proxy->>TxInterceptor: 메서드 인터셉트
-    
-    TxInterceptor->>TxManager: 트랜잭션 시작 요청
-    activate TxManager
-    TxManager->>TxManager: @Transactional 속성 확인<br/>(readOnly=true)
-    TxManager-->>TxInterceptor: 트랜잭션 컨텍스트 생성
-    deactivate TxManager
-    
-    rect rgb(245, 255, 250)
-        Note over Service,Repository: 트랜잭션 컨텍스트 내에서 실행
-        TxInterceptor->>Service: 실제 메서드 실행
-        activate Service
-        
-        Service->>Repository: findById(counselorId)
-        activate Repository
-        Repository-->>Service: Optional<Counselor>
-        deactivate Repository
-        
-        alt Counselor 존재
-            Service->>Service: CounselorDetailResponse.from(counselor)
-        else Counselor 없음
-            Service->>Service: IllegalArgumentException 발생
-        end
-        
-        Service-->>TxInterceptor: 결과 반환 또는 예외 발생
-        deactivate Service
-    end
-    
-    alt 메서드 정상 종료
-        TxInterceptor->>TxManager: Commit 요청
-        activate TxManager
-        TxManager->>TxManager: 트랜잭션 커밋
-        TxManager-->>TxInterceptor: 커밋 완료
-        deactivate TxManager
-        TxInterceptor->>Proxy: 결과 전달
-        Proxy->>Client: CounselorDetailResponse 반환
-    else 예외 발생
-        TxInterceptor->>TxManager: Rollback 요청
-        activate TxManager
-        TxManager->>TxManager: 트랜잭션 롤백
-        TxManager-->>TxInterceptor: 롤백 완료
-        deactivate TxManager
-        TxInterceptor->>Proxy: 예외 전달
-        Proxy->>Client: 예외 throw
-    end
-    
-    Note over Client,Repository: 트랜잭션 종료 및 결과 반환
-```
+<img width="460" height="300" src="/static/images/project/transactional_method_call.png"/>
 
 1. (비지니스 로직) Service 비지니스 로직에서 `@Transactional` 어노테이션을 사용합니다. 여기서는 상담사 단건조회 로직을 예시로 들어보겠습니다.
 
