@@ -5,8 +5,9 @@ tags: ['Backend', 'java']
 draft: false
 summary: Value Object를 사용할때 재정의 해야 하는 이유
 ---
-> **💡 핵심질문 1:** Lazy Loading이 유발하는 Lazy Initialization Exception의 발생 원리와 JPA 동작 원리는 무엇일까요?
-> **💡 핵심질문 2:** @ElementCollection과 같은 To-Many 관계에서 Lazy Initialization Exception을 해결할 수 있는 전략은 무엇인가요?
+**💡 핵심질문 1:** Lazy Loading이 유발하는 Lazy Initialization Exception의 발생 원리와 JPA 동작 원리는 무엇일까요?
+
+**💡 핵심질문 2:** @ElementCollection과 같은 To-Many 관계에서 Lazy Initialization Exception을 해결할 수 있는 전략은 무엇인가요?
 
 ## 문제상황
 
@@ -52,7 +53,7 @@ LazyLoading이 동작하는 방식은 다음과 같습니다.
 
 ### `@Transactional` 어노테이션 동작과정
 
-<img width="460" height="300" src="/static/images/project/transactional_method_call.png"/>
+<img width="460" height="300" src="/static/images/project/transaction_sequence_diagram.png"/>
 
 1. (비지니스 로직) Service 비지니스 로직에서 `@Transactional` 어노테이션을 사용합니다. 여기서는 상담사 단건조회 로직을 예시로 들어보겠습니다.
 
@@ -71,7 +72,7 @@ public CounselorDetailResponse getCounselorById(Long counselorId) {
 2. (스프링) 스프링이 애플리케이션을 실행할때 BeanPostProcessor가 모든 빈을 검사합니다. 자바 Reflection을 사용해 `@Transactional` 어노테이션이 붙은 클래스와 메서드를 감지합니다.
     - 자바 Reflection은 런타임에 클래스, 메서드, 필드와 같은 정보를 검사하고 조작할 수 있는 자바 API입니다. 어노테이션의 정보를 읽는 것도 자바 Reflection이 수행합니다.
 3. (스프링) 스프링 AOP는 감지된 클래스(대상 객체)를 감싸는 프록시 객체를 생성하고, 원본 대신 프록시를 Spring Bean으로 등록합니다.
-    - 프록시 패턴 : Client → Proxy → Real Object(실제 비지니스 로직)
+    - 프록시 패턴 : Client -> Proxy -> Real Object(실제 비지니스 로직)
 4. (스프링) 클라이언트가 메서드를 호출하면 실제 대상 객체가 아닌 프록시 객체의 메서드가 호출되면서 인터셉트됩니다.
     - 프록시가 가짜 객체 프록시를 생성해 진짜 객체는 수정하지 않고 원본을 보존합니다. 이때 프록시를 통해서 생성한 객체는
     1. 어플리케이션을 실행하는 동안 재사용됩니다.
@@ -89,7 +90,7 @@ public CounselorDetailResponse getCounselorById(Long counselorId) {
 
 앞서 트랜잭션 동작방식에서 스프링 AOP는 `@Transactional` 어노테이션을 확인하고 트랜잭션을 시작한다고 했습니다. 이때 트랜잭션의 생명주기에 맞춰 Hibernate는 Session을 열고 영속성 컨텍스트가 생성됩니다.
 
-Counselor 엔티티 내부에 있는 `specializations` 필드는 Lazy Loading으로 설정되어 있습니다. 이 설정 때문에 트랜잭션 동안 `specializations` 컬렉션은 Hibernate의 컬렉션 래퍼(Wrapper) 객체로 주입되어 있습니다. 이 객체가 가지고 있는 값은 엔티티 ID와 활성화된 session입니다. 즉 실제 값이 아닌 주소값만 가지고 있습니다.
+Counselor 엔티티 내부에 있는 `specializations` 필드는 Lazy Loading으로 설정되어 있습니다. `@ElementCollection` 설정 때문에 트랜잭션 동안 `specializations` 컬렉션은 앞에서 살펴본 프록시가 아닌 Hibernate의 컬렉션 래퍼(Wrapper) 객체가 주입됩니다. 이 객체가 가지고 있는 값은 엔티티 ID와 활성화된 session입니다. 즉 실제 값이 아닌 주소값만 가지고 있습니다.
 
 그런데 Service 계층에서 Counselor 조회 로직이 완료되면 `@Transactional`에 의해 트랜잭션이 Commit 되고 Hibernate session도 닫히게 됩니다. Controller가 반환하는 엔티티 객체를 JSON 직렬화할 때 Jackson이 컬렉션 필드의 래퍼 객체에 접근합니다. 이 래퍼 객체는 이미 닫힌 Hibernate Session을 통해 데이터베이스 조회를 시도하지만, 세션이 닫혔기 때문에 데이터를 가지고 올 수 없고 JSON 변환에 실패합니다. (오류 메세지에서 Could not write JSON이 출력되는 이유입니다)
 
@@ -143,6 +144,8 @@ private List<Specialization> specializations = new ArrayList<>();
 
 단건조회에서는 카테시안곱 문제를 우회하는 전략으로 활용할 수 있습니다. `@Batchsize` 가 적용된 컬렉션은 LazyLoading 전략이 유지되기 때문에 JOIN이 발생하지 않습니다.
 
+### DTO 초기화 방식
+
 실질적으로 LazyLoading 지연초기화 문제를 해결하는 방법은 조회 시점에 객체를 초기화하는 것입니다. 아래 목록조회 응답DTO를 예시로 내부에서 어떻게 동작하는지 살펴보겠습니다.
 
 ```java
@@ -168,7 +171,13 @@ public static CounselorListResponse from(Counselor counselor) {
 
 ## 정리
 
-스프링 JPA를 사용하다가 발생할 수 있는 Lazy Initialization 문제에 대해서 살펴봤습니다. 여러 값 객체를 저장하는 경우
+스프링 JPA를 사용하다가 발생할 수 있는 Lazy Initialization 문제에 대해서 살펴봤습니다. `@ElementCollection`을 사용해 여러 값 객체를 저장하는 경우 Lazy Loading 전략을 사용하는 할 때 래퍼 객체가 생성되고 트랜잭션 밖에서 접근을 시도할 때 Lazy Initialization Exception이 발생한다는 것을 확인했습니다.
+
+지연 초기화 문제를 해결하기 위해서 값을 반환하는 시점에 DTO에서 직접 초기화를 해주는 방법을 선택해서 데이터베이스를 조회해도록 했습니다. `@Batchsize` 어노테이션을 사용해 Fetch Join시 발생할 수 있는 카테시안곱 문제를 우회하는 전략도 사용했습니다.
+
+트랜잭션 어노테이션으로 스프링 내부가 어떻게 동작하는지, Lazy Loading 전략을 사용했을 때 조회하는 방식, 그리고 N+1 문제를 방지할 수 있는 방법에 대해서 알게되었습니다.
+
+이 글을 통해 스프링 백엔드 프로젝트를 하다 보면 자주 만나는 문제를 분석해보고 이해하는데 작은 도움이 되었으면 좋겠습니다.
 
 참고자료:
 
