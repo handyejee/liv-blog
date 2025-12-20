@@ -1,9 +1,9 @@
 ---
-title: 이미지 저장 방식: DB BLOB보다 URL 링크를 선호하는 이유는 뭘까?
+title: '이미지 저장 방식: DB BLOB보다 URL 링크를 선호하는 이유는 뭘까?'
 date: '2025-12-20'
 tags: ['Backend', 'Java', 'SpringDataJPA', 'Performance', 'OOM', 'BLOB', '이미지저장']
 draft: false
-summary: 데이터베이스에 이미지 파일을 직접 저장할 경우 위험할 수 있는 이유를 성능 테스트와 OOM(Out Of Memory) 분석을 통해 알아봅니다. 
+summary: '데이터베이스에 이미지 파일을 직접 저장할 경우 위험할 수 있는 이유를 성능 테스트와 OOM(Out Of Memory) 분석을 통해 알아봅니다.'
 ---
 [마음메이트](https://maummate.com/) 서비스에서 이미지 기능을 개발하면서 이미지 저장방식에 대해서 고민한 부분을 나눠보려고 합니다.
 
