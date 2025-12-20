@@ -1,9 +1,9 @@
 ---
 title: ElementCollection을 사용할때 LazyLoading 문제
 date: '2025-12-10'
-tags: ['Backend', 'java']
+tags: ['Backend', 'java', 'JPA', '마음메이트', 'maummate', 'TroubleShooting']
 draft: false
-summary: Value Object를 사용할때 재정의 해야 하는 이유
+summary: JPA @ElementCollection 사용 시 발생하는 LazyInitializationException의 원인을 분석하고, 영속성 컨텍스트와 트랜잭션 관점에서의 해결 전략(FetchJoin 등)을 정리합니다.
 ---
 **💡 핵심질문 1:** Lazy Loading이 유발하는 Lazy Initialization Exception의 발생 원리와 JPA 동작 원리는 무엇일까요?
 
@@ -11,7 +11,7 @@ summary: Value Object를 사용할때 재정의 해야 하는 이유
 
 ## 문제상황
 
-마음메이트 프로젝트를 진행하며 상담사 조회 기능을 개발하고 상담사 단건 조회를 테스트 하던 중 아래와 같은 에러 메세지가 출력되는 것을 발견했습니다.
+[마음메이트](https://maummate.com/) 프로젝트를 진행하며 상담사 조회 기능을 개발하고 상담사 단건 조회를 테스트 하던 중 아래와 같은 에러 메세지가 출력되는 것을 발견했습니다.
 
 ``` text
 .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: failed to lazily initialize a collection of role: com.maummate.maummatebackend.counselors.entity.Counselor.specializations: could not initialize proxy - no Session]
