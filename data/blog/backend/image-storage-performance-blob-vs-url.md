@@ -1,5 +1,5 @@
 ---
-title: '이미지 저장 방식: DB BLOB보다 URL 링크를 선호하는 이유는 뭘까?'
+title: '이미지 저장 방식: DB에 직접 저장하기보다 URL 링크를 선호하는 이유는 뭘까?'
 date: '2025-12-20'
 tags: ['Backend', 'Java', 'SpringDataJPA', 'Performance', 'OOM', 'BLOB', '이미지저장']
 draft: false
