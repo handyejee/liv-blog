@@ -6,6 +6,7 @@ draft: false
 summary: '데이터베이스에 이미지 파일을 직접 저장할 경우 위험할 수 있는 이유를 성능 테스트와 OOM(Out Of Memory) 분석을 통해 알아봅니다.'
 ---
 [마음메이트](https://maummate.com/) 서비스에서 이미지 기능을 개발하면서 이미지 저장방식에 대해서 고민한 부분을 나눠보려고 합니다.
+실행한 테스트코드는 [깃헙](https://github.com/handyejee/image-storage-lab)에서 확인할 수 있습니다.
 
 ### 요구사항
 
