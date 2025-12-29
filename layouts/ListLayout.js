@@ -20,10 +20,10 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
     <>
       {/* Hero Banner */}
       <div className='pb-16 pt-20 text-center sm:text-left'>
-        <h1 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl'>
+        <h2 className='mb-6 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl'>
           품질과 제품의 가치를 이해하는 <br />
           개발자입니다.
-        </h1>
+        </h2>
 
         <p className='max-w-2xl text-lg leading-7 text-gray-600 dark:text-gray-400'>
           QA에서 개발자로, 단순히 돌아가는 기능을 만드는 것을 넘어 <br />
