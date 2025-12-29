@@ -77,15 +77,13 @@ spring:
 
 의존성에서 연관이 있던 Client 설정을 하는 Config 클래스, Service 클래스, Controller 클래스에 각각 추가했습니다. 이를 통해 테스트 환경에서는 이미지 관련 모듈 자체가 스프링 컨텍스트에 등록되지 않도록 격리했습니다.
 
-```java
+```java:Service 클래스 예시
 @Service
 @Profile("!test")
 @RequiredArgsConstructor
 public class FileUploadService {
 }
 ```
-
-> Service 클래스 예시
 
 `@Profile("!test")` 방식은 해당 모듈의 테스트까지 제한한다는 단점이 있습니다. 하지만 현재는 인프라 설정이 미비한 CI 빌드를 성공시키는 것이 우선순위였기에 이 방식을 선택했습니다.
 
