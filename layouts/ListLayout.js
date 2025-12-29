@@ -4,6 +4,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { useState } from 'react'
 import Pagination from '@/components/Pagination'
 import formatDate from '@/lib/utils/formatDate'
+import kebabCase from '@/lib/utils/kebabCase'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const [searchValue, setSearchValue] = useState('')
@@ -75,11 +76,12 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
 
                       <div className='mt-2 flex flex-wrap gap-2'>
                         {tags.map((tag) => (
-                          <span
+                          <Link
                             key={tag}
-                            className='text-sm font-medium text-primary-600 dark:text-primary-500'>
+                            href={`/tags/${kebabCase(tag)}`}
+                            className='text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-500 dark:hover:text-primary-400'>
                             #{tag}
-                          </span>
+                          </Link>
                         ))}
                       </div>
                     </div>
