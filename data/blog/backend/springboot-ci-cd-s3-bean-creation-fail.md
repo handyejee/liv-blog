@@ -10,7 +10,7 @@ summary: 이미지 업로드 기능을 배포한 후 CI/CD를 도입하며 발�
 
 [마음메이트](https://maummate.com/) 프로젝트를 진행하며 상담사 이미지를 저장하는 API를 개발하고 배포를 진행했습니다. Cloudflare R2를 사용해 이미지 업로드 기능을 개발했고 운영환경에 이미 배포가 되어있었습니다. 따라서 환경설정과 CI/CD 스크립트만 작성하면 된다고 생각해 로컬에서 CI/CD를 위한 브랜치를 생성해 각각 스크립트를 작성하고 머지를 시도했는데 빌드단계에서 실패했습니다.
 
-<img width="460" height="300" src="/static/images/project/build_error_message.png"/>
+<img width="600" height="500" src="/static/images/project/build_error_message.png"/>
 
 `Failed to load ApplicationContext` 에러는 스프링부트 테스트를 실행할 때 애플리케이션 설정 관련된 오류가 있을 때 나타나는 에러입니다. 구글에 오류 메시지를 검색해보면 대부분 환경설정이 잘못되어서 발생하는 것으로 보입니다. 상세한 오류를 확인하기 위해 스크립트에 테스트 결과를 저장해서 볼 수 있도록  CI 스크립트에 아래 내용을 추가했습니다.
 
@@ -24,7 +24,7 @@ summary: 이미지 업로드 기능을 배포한 후 CI/CD를 도입하며 발�
     retention-days: 5
 ```
 
-<img width="460" height="300" src="/static/images/project/test_error.png"/>
+<img width="600" height="500" src="/static/images/project/test_error.png"/>
 
 파일을 확인해 보면 Access key가 null로 들어가서 NullPointerException가 발생했습니다. 여기까지는 흔히 발생하는 개발자 실수입니다. 그런데 문제가 발생한 시점은 기능 배포 시점이 아닌 CI/CD 스크립트를 도입한 시점이었습니다. 로컬환경과 운영환경에서 이미지 업로드 기능에 대해서 검증이 완료되었고 지금도 기능이 동작하고 있습니다. 그런데 Access key가 없다는 에러가 발생한 것입니다.
 
