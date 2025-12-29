@@ -54,28 +54,37 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
           {displayPosts.map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter
             return (
-              <li key={slug} className='py-4'>
-                <article className='space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0'>
+              <li key={slug} className='py-8'>
+                <article className='space-y-3 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0'>
                   <dl>
                     <dt className='sr-only'>Published on</dt>
-                    <dd className='text-base font-medium leading-6 text-gray-500 dark:text-gray-400'>
+                    <dd className='text-sm font-medium leading-6 text-gray-500 dark:text-gray-400'>
                       <time dateTime={date}>{formatDate(date)}</time>
                     </dd>
                   </dl>
+
                   <div className='space-y-3 xl:col-span-3'>
                     <div>
                       <h3 className='text-2xl font-bold leading-8 tracking-tight'>
-                        <Link href={`/blog/${slug}`} className='text-gray-900 dark:text-gray-100'>
+                        <Link
+                          href={`/blog/${slug}`}
+                          className='text-gray-900 hover:text-primary-600 dark:text-gray-100 dark:hover:text-primary-500'>
                           {title}
                         </Link>
                       </h3>
-                      <div className='flex flex-wrap'>
+
+                      <div className='mt-2 flex flex-wrap gap-2'>
                         {tags.map((tag) => (
-                          <Tag key={tag} text={tag} />
+                          <span
+                            key={tag}
+                            className='text-sm font-medium text-primary-600 dark:text-primary-500'>
+                            #{tag}
+                          </span>
                         ))}
                       </div>
                     </div>
-                    <div className='prose max-w-none text-gray-500 dark:text-gray-400'>
+
+                    <div className='prose max-w-none text-base leading-relaxed text-gray-600 dark:text-gray-400'>
                       {summary}
                     </div>
                   </div>
