@@ -1,5 +1,5 @@
 ---
-title: Spring Boot CI 빌드 에러 해결: 테스트 코드가 없는데도 왜 빈 생성에 실패할까?
+title: 'Spring Boot CI 빌드 에러 해결: 테스트 코드가 없는데도 왜 빈 생성에 실패할까?'
 date: '2025-12-29'
 tags: ['Backend', 'java', 'CI/CD', 'GitHubActions', '마음메이트', 'maummate', 'TroubleShooting']
 draft: false
