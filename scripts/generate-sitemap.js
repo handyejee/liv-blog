@@ -34,7 +34,9 @@ function kebabCase(str) {
 }
 
 function formatDate(date) {
-  return new Date(date).toISOString()
+  // Format as YYYY-MM-DD for better compatibility with search engines
+  const d = new Date(date)
+  return d.toISOString().split('T')[0]
 }
 
 ;(async () => {
@@ -48,6 +50,7 @@ function formatDate(date) {
     '!pages/404.js',
     '!pages/blog/[...slug].js',
     '!pages/tags/[tag].js',
+    '!pages/*.backup.js',
   ])
 
   // Get all blog posts
