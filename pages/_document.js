@@ -4,6 +4,12 @@ class MyDocument extends Document {
     return (
       <Html lang='en' className='scroll-smooth'>
         <Head>
+          <link
+            rel='stylesheet'
+            as='style'
+            crossOrigin='anonymous'
+            href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css'
+          />
           <meta name='msapplication-TileColor' content='#000000' />
           <meta name='theme-color' media='(prefers-color-scheme: light)' content='#fff' />
           <meta name='theme-color' media='(prefers-color-scheme: dark)' content='#000' />
